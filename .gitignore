@@ -29,6 +29,9 @@ extensions/
 # Local run results
 output/
 
+# Personal Claude Code instructions
+CLAUDE.md
+
 # IDE / OS
 .vscode/
 .idea/
