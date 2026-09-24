@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Price Comparison Report</title>
+<style>
+  body { font-family: system-ui, Arial, sans-serif; margin: 2rem auto; max-width: 960px; padding: 0 1rem; color: #1a1a1a; }
+  h1 { margin-bottom: 0.2rem; }
+  .sub { color: #666; margin-top: 0; }
+  table { border-collapse: collapse; width: 100%; margin-top: 1.5rem; }
+  th, td { padding: 10px 12px; border-bottom: 1px solid #e3e3e3; text-align: left; }
+  th { background: #f6f6f6; }
+  td.price { font-variant-numeric: tabular-nums; }
+  .best { background: #e6f7ec; font-weight: 700; color: #0a6b34; }
+  .oos { color: #999; text-decoration: line-through; }
+  .warn { background: #fff4d6; color: #7a5b00; }
+  .fail { color: #b00020; }
+  .flag { font-size: 0.75rem; display: block; font-weight: 400; }
+  .legend { margin-top: 1.5rem; font-size: 0.9rem; color: #555; }
+  .legend span { padding: 2px 8px; border-radius: 4px; margin-right: 8px; }
+</style>
+</head>
+<body>
+<h1>Price Comparison</h1>
+<p class="sub">Generated {{ generated }} &middot; {{ rows|length }} products &middot; {{ shops|length }} shops</p>
+
+<table>
+  <tr>
+    <th>Product</th>
+    {% for s in shops %}<th>{{ s }}</th>{% endfor %}
+    <th>Best deal</th>
+  </tr>
+  {% for row in rows %}
+  <tr>
+    <td>{{ row.product }}</td>
+    {% for s in shops %}
+      {% set r = (row.results | selectattr("shop", "equalto", s) | list | first) %}
+      {% if not r or r.status == "failed" %}
+        <td class="fail">n/a<span class="flag">{{ r.note if r else "no data" }}</span></td>
+      {% elif r.status == "unverified" %}
+        <td class="price warn">{{ "%.2f"|format(r.price) if r.price else "?" }}<span class="flag">unverified: {{ r.note }}</span></td>
+      {% elif not r.in_stock %}
+        <td class="price oos">{{ "%.2f"|format(r.price) }}<span class="flag">out of stock</span></td>
+      {% else %}
+        <td class="price {{ 'best' if row.cheapest_shop == s else '' }}">{{ "%.2f"|format(r.price) }} {{ r.currency }}</td>
+      {% endif %}
+    {% endfor %}
+    <td>{% if row.cheapest_shop %}<strong>{{ row.cheapest_shop }}</strong> ({{ "%.2f"|format(row.cheapest_price) }}){% else %}&mdash;{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<p class="legend">
+  <span class="best">cheapest available</span>
+  <span class="oos">out of stock (ignored)</span>
+  <span class="warn">unverified: needs a human check</span>
+</p>
+<p class="legend">Prices were read from each shop's page by an AI agent that looks at screenshots. Anything that fails a sanity check is flagged instead of trusted.</p>
+</body>
+</html>

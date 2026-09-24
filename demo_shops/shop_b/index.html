@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GadgetHub - Card Layout</title>
+<style>
+  body { font-family: Georgia, serif; margin: 2rem; background: #fafafa; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; max-width: 800px; }
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; }
+  .card h3 { margin: 0 0 8px; font-size: 1rem; }
+  .price { font-size: 1.3rem; color: #0a6; font-weight: bold; }
+  .oos { color: #b00; font-size: 0.9rem; }
+  .ok { color: #555; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<h1>GadgetHub</h1>
+<p>Your one-stop gadget store. Prices in USD.</p>
+<div class="grid">
+  <div class="card"><h3>Wireless Mouse</h3><div class="price">$22.49</div><div class="ok">Ready to ship</div></div>
+  <div class="card"><h3>Mechanical Keyboard</h3><div class="price">$84.99</div><div class="ok">Ready to ship</div></div>
+  <div class="card"><h3>USB-C Hub</h3><div class="price">$34.99</div><div class="ok">Ready to ship</div></div>
+  <div class="card"><h3>27-inch Monitor</h3><div class="price">$229.99</div><div class="ok">Ready to ship</div></div>
+  <div class="card"><h3>Laptop Stand</h3><div class="price">$29.50</div><div class="oos">Out of stock</div></div>
+  <div class="card"><h3>HD Webcam</h3><div class="price">$49.00</div><div class="ok">Ready to ship</div></div>
+</div>
+</body>
+</html>

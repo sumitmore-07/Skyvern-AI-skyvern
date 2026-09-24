@@ -1,0 +1,4 @@
+skyvern[local]==1.0.48
+PyYAML>=6.0
+jinja2>=3.1.6
+pytest>=8.0

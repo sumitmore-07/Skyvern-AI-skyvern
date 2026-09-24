@@ -1,0 +1,8 @@
+# Demo shops are served automatically by run_task.py on these ports (folders in demo_shops/ are matched in sorted order)
+sites:
+  - name: TechMart
+    url: http://localhost:9001/
+  - name: GadgetHub
+    url: http://localhost:9002/
+  - name: ValueDepot
+    url: http://localhost:9003/
